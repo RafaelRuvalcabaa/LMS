@@ -1,24 +1,26 @@
 from decorators.log_error import log_error_wrap
 from logs import logger
-
+from models.loan import Loan 
 
 
 class Bank:
     _instancia = None 
 
-    def __new__(cls, *args,**kwargs):
+    def __new__(cls, *args, **kwargs):
         if cls._instancia is None: 
             cls._instancia = super().__new__(cls)
         return cls._instancia
     
-    def __init__(self, name: str, capital: float)-> None:
-        if hasattr(self, '_name'):
-            return
-        if capital is None or capital <= 0 :
-            logger.error(f"Error in class {self.__class__.__name__}: Error in capital")
-            raise ValueError ("Capital must be greater than 0")
-        if name == None: 
-            logger.error(f"Error in class {self.__class__.__name__}: bank needs to have a name")
+    @log_error_wrap
+    def __init__(self, name: str, capital: float) -> None:
+        if hasattr(self, '_name'): return
+        
+        # Al usar el decorador, solo lanza la excepción y él la loguea
+        if capital is None or capital <= 0:
+            raise ValueError("Capital must be greater than 0")
+        if not name: 
+            raise ValueError("Bank needs to have a name")
+        self.loan_history = []
         self._name = name 
         self._capital = capital
 
@@ -43,3 +45,7 @@ class Bank:
         if amount > self._capital:
             raise ValueError ("Amount is higher than capital")
         self._capital -= amount 
+
+    def authorized_credit_report(self, loan_list)->str: 
+        for user in range(loan_list): 
+            yield user

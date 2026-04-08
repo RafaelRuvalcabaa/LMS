@@ -12,7 +12,7 @@ def log_error_wrap(func):
         try: 
             result = func(*args, **kwargs)
             logger.info(f"Metodo: {func.__name__} -> Class:  {args[0].__class__.__name__} -> Successfuly")
-        except (ValidationError, TypeError) as error: 
+        except Exception as error: 
             logger.error(f"Error en {func.__name__} -> Detalle: {error}")
             raise 
         return result
