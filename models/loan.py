@@ -1,10 +1,15 @@
 from models.client import Client
 from models.bank import Bank
 from decorators.log_error import log_error_wrap
-from errors.errors_borrowed import CreditScoreError
+from errors.errors_borrowed import CreditScoreError, TimeToPay, ZeroAmount
 
-class Loan: 
+class Loan:
+    @log_error_wrap
     def __init__(self, cliente: Client, bank: Bank, amount: float, time: int)-> None: 
+        if amount <=0: 
+            raise ZeroAmount("Amount was less than 0")
+        if time <=0:
+            raise TimeToPay("Time to pay cannot be less than 0")
         self.cliente = cliente
         self.bank = bank 
         self.amount = amount 
@@ -23,3 +28,8 @@ class Loan:
         self.bank.withdraw(self.amount)
         self.bank.loan_history.append(self)
         return f"Prestamo creado por {self.amount}"
+
+    @log_error_wrap
+    def monthly(self, time, amount): 
+        monthly_payment = amount/time
+        return monthly_payment 

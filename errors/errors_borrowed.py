@@ -6,3 +6,8 @@ class NoNameClient (ValidationError):
 
 class CreditScoreError(Exception): 
     pass 
+
+class ZeroAmount(Exception): 
+    pass
+class TimeToPay(Exception): 
+    pass 

@@ -1,6 +1,5 @@
 from decorators.log_error import log_error_wrap
-from logs import logger
-from models.loan import Loan 
+from typing import Generator
 
 
 class Bank:
@@ -46,6 +45,6 @@ class Bank:
             raise ValueError ("Amount is higher than capital")
         self._capital -= amount 
 
-    def authorized_credit_report(self, loan_list)->str: 
+    def authorized_credit_report(self, loan_list)->Generator: 
         for user in range(loan_list): 
             yield user
