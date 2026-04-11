@@ -9,5 +9,11 @@ class CreditScoreError(Exception):
 
 class ZeroAmount(Exception): 
     pass
+
 class TimeToPay(Exception): 
     pass 
+
+class AmountBackProblems(Exception): 
+    pass
+
+class MoreLoan(Exception): pass
