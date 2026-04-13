@@ -45,6 +45,3 @@ class Bank:
             raise ValueError ("Amount is higher than capital")
         self._capital -= amount 
 
-    def authorized_credit_report(self, loan_list)->Generator: 
-        for user in range(loan_list): 
-            yield user
