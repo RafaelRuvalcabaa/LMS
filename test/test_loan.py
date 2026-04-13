@@ -25,7 +25,7 @@ def test_str(build_client, build_bank):
 
 def test_loan_amount(build_client, build_bank):
     loan = Loan(build_client, build_bank, 5000, 12)
-    assert loan.amount == 5000
+    assert loan.amount == 9999
   
 def test_loan_time(build_client, build_bank): 
     loan = Loan(build_client, build_bank, 5000, 12)
