@@ -2,7 +2,6 @@ import pytest
 from models.client import Client
 from errors.errors_borrowed import NoNameClient
 
-
 @pytest.fixture
 def build_client(): 
     name= "Rafael"
@@ -28,3 +27,4 @@ def test_client_without_name():
 def test_without_names(name, last_name):
     with pytest.raises(NoNameClient): 
         Client(name, last_name, "Guadalajara", 750)
+

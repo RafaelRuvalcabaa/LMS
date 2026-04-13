@@ -25,11 +25,13 @@ class Loan:
             self.prestamo = False 
             raise CreditScoreError("User doesn't have enough credit history")
         self.prestamo = True 
-        self.bank.withdraw(self.amount)
-        self.bank.loan_history.append(self)
         return f"Prestamo creado por {self.amount}"
 
     @log_error_wrap
-    def monthly(self, time, amount): 
-        monthly_payment = amount/time
-        return monthly_payment 
+    def monthly(self): 
+        if not self.prestamo: 
+            raise ValueError("Loan is not approved yet")
+        self.amount = self.amount / self.time 
+        return self.amount  
+        
+        

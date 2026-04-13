@@ -18,3 +18,5 @@ class Client:
     @property
     def credit_history(self)->int: 
         return self._credit_history
+    
+    
