@@ -2,6 +2,11 @@ from fastapi import FastAPI, HTTPException
 from models.bank import Bank 
 from models.client import Client
 from models.loan import Loan 
+from schemas import LoanCreate
+from typing import List
+from errors.errors_borrowed import CreditScoreError, ZeroAmount, TimeToPay, NoNameClient
+import json 
+
 
 # ---------------------
 app = FastAPI()
@@ -34,6 +39,7 @@ bank.add_loan(loan1)
 def get_loans(): 
     return {"loans": [str(loan) for loan in bank.get_loans()]}
 
+"""
 @app.get("/loans/{loan_id}")
 def get_loan(loan_id: int): 
     try: 
@@ -42,3 +48,40 @@ def get_loan(loan_id: int):
     except IndexError: 
         status_code = 404
         raise HTTPException(status_code, detail="Loan Not Found")
+"""
+
+@app.post("/loans/bulk")
+def create_loan(loan_data: LoanCreate ): 
+    try: 
+        client = Client(loan_data.name, loan_data.last_name, loan_data.city, loan_data.credit_history)
+        loan = Loan(client, bank, loan_data.amount, loan_data.time)
+        loan.loan()
+        bank.add_loan(loan)
+        return {"message": "Loan created", "loan": str(loan)}
+    except CreditScoreError:
+        raise HTTPException(status_code=400, detail="Credit score too low") 
+    except ZeroAmount: 
+        raise HTTPException(status_code=400, detail="Amount must be greater than 0")
+    except TimeToPay:
+        raise HTTPException(status_code=400, detail="Time to pay must be greater than 0")
+    except NoNameClient: 
+        raise HTTPException(status_code=400, detail="Client must have a name")
+
+
+@app.get("/loans/all")
+def get_loan_json(): 
+    result = []
+    for loan in bank.get_loans():
+        result.append({
+            "name": loan.cliente._name,
+            "last_name": loan.cliente._last_name,
+            "city": loan.cliente._address,
+            "credit_history": loan.cliente._credit_history,
+            "amount": loan.amount,
+            "time": loan.time,
+            "status": loan.prestamo
+        })
+    if result: 
+        with open("loans.json", "w") as file:
+            json.dump(result, file, indent=4,  ensure_ascii=False)
+    return result
