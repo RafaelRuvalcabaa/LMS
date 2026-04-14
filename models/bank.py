@@ -1,5 +1,4 @@
 from decorators.log_error import log_error_wrap
-from typing import Generator
 
 
 class Bank:
@@ -44,4 +43,16 @@ class Bank:
         if amount > self._capital:
             raise ValueError ("Amount is higher than capital")
         self._capital -= amount 
+
+    @log_error_wrap
+    def add_loan(self, loan): 
+        self.loan_history.append(loan)
+
+    @log_error_wrap
+    def get_loans(self): 
+        return self.loan_history
+    
+    @log_error_wrap
+    def get_loan(self, loan_id):
+        return self.loan_history[loan_id] 
 

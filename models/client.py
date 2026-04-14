@@ -13,7 +13,7 @@ class Client:
         self._credit_history = credit_history
 
     def __str__(self): 
-        return f"El nombre del cliente es: {self._name} {self._last_name}"
+        return f"{self._name} {self._last_name}"
 
     @property
     def credit_history(self)->int: 
