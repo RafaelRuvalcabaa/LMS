@@ -11,3 +11,7 @@ class TimeToPay(Exception): pass
 class AmountBackProblems(Exception): pass
 
 class MoreLoan(Exception): pass
+
+class NoLoan (Exception): pass 
+
+class BankCapitalError(Exception): pass

@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-class LoanCreate(BaseModel): 
+class LoanCreate(BaseModel):
     name: str
     last_name: str
     city: str 
@@ -16,4 +16,4 @@ class LoanResponse(BaseModel):
     amount: float
     time: int
     status: bool 
-    
+    fecha: str

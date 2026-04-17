@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Rafa",
+        "last_name": "Ruvalcaba",
+        "city": "Guadalajara",
+        "credit_history": 650,
+        "amount": 5000,
+        "time": 12,
+        "status": true,
+        "fecha": null
+    },
+    {
+        "name": "string",
+        "last_name": "string",
+        "city": "string",
+        "credit_history": 679,
+        "amount": 5454656.0,
+        "time": 12,
+        "status": true,
+        "fecha": "2026-04-16 18:52:00"
+    }
+]

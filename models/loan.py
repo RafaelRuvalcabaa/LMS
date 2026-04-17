@@ -1,7 +1,8 @@
 from models.client import Client
 from models.bank import Bank
 from decorators.log_error import log_error_wrap
-from errors.errors_borrowed import CreditScoreError, TimeToPay, ZeroAmount
+from errors.errors_borrowed import CreditScoreError, TimeToPay, ZeroAmount, BankCapitalError
+
 
 class Loan:
     @log_error_wrap
@@ -10,6 +11,8 @@ class Loan:
             raise ZeroAmount("Amount was less than 0")
         if time <=0:
             raise TimeToPay("Time to pay cannot be less than 0")
+        if bank.capital < amount:
+            raise BankCapitalError("Bank doesn't have enough capital")
         self.cliente = cliente
         self.bank = bank 
         self.amount = amount 
