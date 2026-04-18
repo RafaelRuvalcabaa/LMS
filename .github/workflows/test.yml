@@ -19,9 +19,7 @@ jobs:
           python-version: "3.11"
 
       - name: Instalar dependencias
-        run: |
-          pip install --upgrade pip
-          pip install -r requirements.txt
-
+          run: pip install pytest pytest-cov
+          
       - name: Correr tests
         run: pytest --cov=models test/ -v
