@@ -1,22 +1,19 @@
 [
     {
-        "name": "Rafa",
-        "last_name": "Ruvalcaba",
-        "city": "Guadalajara",
-        "credit_history": 650,
-        "amount": 5000,
-        "time": 12,
-        "status": true,
-        "fecha": null
-    },
-    {
-        "name": "string",
-        "last_name": "string",
-        "city": "string",
-        "credit_history": 679,
-        "amount": 5454656.0,
-        "time": 12,
-        "status": true,
-        "fecha": "2026-04-16 18:52:00"
+        "data": {
+            "name": "Rafael",
+            "last_name": "Ruvalcaba",
+            "city": "Guadalajara",
+            "credit_history": 720,
+            "amount": 430000.0,
+            "time": 36,
+            "status": true,
+            "summary": "Prestamo a nombre de Rafael Ruvalcaba, una cantidad de: 430000.0, por un tiempo de 36 meses"
+        },
+        "metadata": {
+            "created_at": "2026-04-17 19:53:47",
+            "created_by": "Admin",
+            "request_id": "26766795-e18e-4d5c-be75-5efba41b9426"
+        }
     }
 ]

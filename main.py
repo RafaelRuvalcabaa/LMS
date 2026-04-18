@@ -1,13 +1,13 @@
 from datetime import datetime
-from typing import Annotated
-
-from fastapi import Depends, FastAPI, HTTPException
+from fastapi import Header, FastAPI, HTTPException
 from models.bank import Bank
 from models.client import Client
 from models.loan import Loan 
-from schemas import LoanCreate
+from typing import List
+from schemas import LoanFinalResponse, LoanCreate, LoanMetadata, LoanResponse
 from errors.errors_borrowed import CreditScoreError, ZeroAmount, TimeToPay, NoNameClient, BankCapitalError
 import json
+
 
 
 def loan_created_at() -> str:
@@ -15,7 +15,7 @@ def loan_created_at() -> str:
 
 
 # ---------------------
-app = FastAPI()
+app = FastAPI(version= "1.2.2")
 # ---------------------
 
 
@@ -61,20 +61,21 @@ def get_loan(loan_id: int):
         raise HTTPException(status_code, detail="Loan Not Found")
 """
 
-@app.post("/loans/bulk")
-def create_loan(
-    loan_data: LoanCreate,
-    fecha_ejecucion: Annotated[str, Depends(loan_created_at)],
-):
+@app.post("/loans/bulk", response_model= LoanFinalResponse)
+def create_loan( 
+    loan_data: LoanCreate, 
+    x_user_id: str = Header(default = "Admin")
+    ):
     try:
-        date_execution = fecha_ejecucion
-
+        metadata_info = LoanMetadata(created_by = x_user_id)
         client = Client(loan_data.name, loan_data.last_name, loan_data.city, loan_data.credit_history)
         loan = Loan(client, bank, loan_data.amount, loan_data.time)
-        loan.fecha = date_execution
         loan.loan()
         bank.add_loan(loan)
-        return {"message": "Loan created", "loan": str(loan), "fecha": date_execution}
+        return LoanFinalResponse(
+            data= loan.to_response(),
+            metadata = metadata_info
+        )     
     except CreditScoreError:
         raise HTTPException(status_code=400, detail="Credit score too low") 
     except BankCapitalError:
@@ -87,24 +88,26 @@ def create_loan(
         raise HTTPException(status_code=400, detail="Client must have a name")
 
 
-@app.get("/loans/all")
-def get_loan_json(): 
+@app.get("/loans/all", response_model= List[LoanFinalResponse])
+def get_loan_json(x_user_id: str = Header(default = "Admin")): 
     result = []
     for loan in bank.get_loans():
+        metadata_info = LoanMetadata(created_by = x_user_id)
+        loan_data = loan.to_response()
         result.append({
-            "name": loan.cliente._name,
-            "last_name": loan.cliente._last_name,
-            "city": loan.cliente._address,
-            "credit_history": loan.cliente._credit_history,
-            "amount": loan.amount,
-            "time": loan.time,
-            "status": loan.prestamo,
-            "fecha": getattr(loan, "fecha", None),
+            "data": loan_data, 
+            "metadata": metadata_info
         })
     if result: 
-        with open("loans_history.json", "w") as file:
-            json.dump(result, file, indent=4,  ensure_ascii=False)
+        with open("loans_history.json", "w", encoding="utf-8") as file:
+            historial_dict = [
+                LoanFinalResponse(data=item["data"], metadata=item["metadata"]).model_dump() 
+                for item in result
+            ]
+            json.dump(historial_dict, file, indent=4, ensure_ascii=False)
     return result
+
+
 
 @app.delete("/loans/delete/{loan_id}")
 def delete_loan(loan_id: int):
