@@ -3,6 +3,10 @@ from models.bank import Bank
 from decorators.log_error import log_error_wrap
 from errors.errors_borrowed import CreditScoreError, TimeToPay, ZeroAmount, BankCapitalError
 
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from schemas import LoanResponse
 
 class Loan:
     @log_error_wrap
@@ -36,5 +40,17 @@ class Loan:
             raise ValueError("Loan is not approved yet")
         self.amount = self.amount / self.time 
         return self.amount  
-        
-        
+    
+    def to_response(self)-> "LoanResponse":
+        """Convierte tu prestamo a schema de respuesta de API"""
+        from schemas import LoanResponse
+        return LoanResponse(
+            name=self.cliente._name,
+            last_name=self.cliente._last_name,
+            city=self.cliente._address,
+            credit_history=self.cliente._credit_history,
+            amount=self.amount,
+            time=self.time,
+            status=self.prestamo,
+            summary= str(self)
+       )

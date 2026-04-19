@@ -17,6 +17,7 @@ def build_client():
 def build_bank(): 
     bank = MagicMock()
     bank._name = "Banamex"
+    bank.capital = 1_000_000
     return bank
 
 def test_str(build_client, build_bank): 
