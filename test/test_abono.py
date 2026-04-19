@@ -12,7 +12,7 @@ from errors.errors_borrowed import AmountBackProblems, MoreLoan
 def loan_fixture(): 
     Banamex = Bank("Banamex", 7899900000)
     Rafael = Client("Rafael", "Ruvalcaba", "Del Coral", 760)
-    return Loan(Banamex, Rafael, 9000, 12)
+    return Loan(Rafael, Banamex, 9000, 12)  # ✅ Cliente primero, banco segundo
 
     
 

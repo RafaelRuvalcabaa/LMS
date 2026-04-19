@@ -2,9 +2,11 @@ from models.client import Client
 from models.bank import Bank
 from decorators.log_error import log_error_wrap
 from errors.errors_borrowed import CreditScoreError, TimeToPay, ZeroAmount, BankCapitalError
-from schemas import LoanResponse
 
+from typing import TYPE_CHECKING
 
+if TYPE_CHECKING:
+    from schemas import LoanResponse
 
 class Loan:
     @log_error_wrap
@@ -39,8 +41,9 @@ class Loan:
         self.amount = self.amount / self.time 
         return self.amount  
     
-    def to_response(self)-> LoanResponse:
+    def to_response(self)-> "LoanResponse":
         """Convierte tu prestamo a schema de respuesta de API"""
+        from schemas import LoanResponse
         return LoanResponse(
             name=self.cliente._name,
             last_name=self.cliente._last_name,
