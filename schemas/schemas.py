@@ -7,17 +7,11 @@ class LoanCreate(BaseModel):
     name: str
     last_name: str
     city: str 
-    credit_history: int
-    amount: float
-    time: int
+    credit_history: int = Field(..., ge=300, le=850)
+    amount: float = Field(..., gt=10000)
+    time: int = Field(..., ge=6, le=72)
 
-class LoanResponse(BaseModel): 
-    name: str
-    last_name: str
-    city: str 
-    credit_history: int
-    amount: float
-    time: int
+class LoanResponse(LoanCreate): 
     status: bool 
     summary : str 
 

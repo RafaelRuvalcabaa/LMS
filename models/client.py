@@ -1,5 +1,5 @@
 from decorators.log_error import log_error_wrap
-from errors.errors_borrowed import NoNameClient 
+from errors.errors_borrowed import NoNameClient, DefaultName
 
 
 class Client: 
