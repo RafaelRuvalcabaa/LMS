@@ -15,3 +15,5 @@ class MoreLoan(Exception): pass
 class NoLoan (Exception): pass 
 
 class BankCapitalError(Exception): pass
+
+class DefaultName(Exception): pass 
