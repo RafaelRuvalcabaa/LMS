@@ -10,7 +10,8 @@ class LoanService:
 
     def create_loan(
         self, 
-        loan_data: LoanCreate, 
+        loan_data: LoanCreate,
+        created_by: str
     )-> Loan:  
             client = Client(
                 loan_data.name,
@@ -19,7 +20,16 @@ class LoanService:
                 loan_data.credit_history
             )
 
-            loan = Loan(client, self.bank, loan_data.amount, loan_data.time)
+            loan = Loan(client,
+            self.bank,
+            loan_data.amount, 
+            loan_data.time,
+            created_by=created_by  # ← AGREGAR ESTO
+)
             loan.loan()
             self.bank.add_loan(loan)
             return loan 
+
+
+    def get_all_loan(self)-> list[Loan]: 
+        return self.bank.get_loans() 
