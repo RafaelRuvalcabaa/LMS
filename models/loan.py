@@ -56,6 +56,7 @@ class Loan:
             credit_history=self.cliente._credit_history,
             amount=self.amount,
             time=self.time,
+            email=self.cliente._email,
             status=self.prestamo,
             summary= str(self)
        )

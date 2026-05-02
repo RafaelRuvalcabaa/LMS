@@ -9,7 +9,7 @@ class LoanService:
         self.bank = bank_instance
 
     def create_loan(
-        self, 
+        self,
         loan_data: LoanCreate,
         created_by: str
     )-> Loan:  
@@ -17,14 +17,15 @@ class LoanService:
                 loan_data.name,
                 loan_data.last_name,
                 loan_data.city, 
-                loan_data.credit_history
+                loan_data.credit_history,
+                loan_data.email
             )
 
             loan = Loan(client,
             self.bank,
             loan_data.amount, 
             loan_data.time,
-            created_by=created_by  # ← AGREGAR ESTO
+            created_by=created_by  
 )
             loan.loan()
             self.bank.add_loan(loan)

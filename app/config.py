@@ -14,10 +14,11 @@ class Settings(BaseSettings):
     # Email (Fase 05)
     email_from: str = "noreply@loansystem.dev"
     email_enabled: bool = False
+    resend_api_key: str = ""
 
     # Seguridad (Fase 07)
-    secret_key: str = "cambia-esto-antes-de-produccion"
-
+    secret_key: str = "desarrollo-loan-system-2026"
+    
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"

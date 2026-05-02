@@ -1,7 +1,8 @@
 
-from fastapi import APIRouter, Header, HTTPException, status
+from fastapi import APIRouter, Header, HTTPException
 from schemas import LoanCreate, LoanFinalResponse, LoanMetadata
 from app.services.loan_service import LoanService  
+from app.services.email_service import EmailService
 from models.bank import Bank
 from errors.errors_borrowed import (
     CreditScoreError, ZeroAmount, TimeToPay, 
@@ -13,7 +14,7 @@ from errors.errors_borrowed import (
 router = APIRouter(prefix="/loans", tags=["loans"])
 bank = Bank.get_instance()
 loan_service = LoanService(bank)
-
+email_service = EmailService()
 
 @router.post("/bulk", response_model= LoanFinalResponse, status_code=201)
 def create_loan( 
@@ -35,6 +36,7 @@ def create_loan(
             created_by=loan.created_by,
             request_id=loan.request_id
         )
+        email_service.send_loan_email(loan)
         
         return LoanFinalResponse(
             data=loan.to_response(), 
