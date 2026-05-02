@@ -11,7 +11,7 @@ from errors.errors_borrowed import AmountBackProblems, MoreLoan
 @pytest.fixture 
 def loan_fixture(): 
     Banamex = Bank("Banamex", 7899900000)
-    Rafael = Client("Rafael", "Ruvalcaba", "Del Coral", 760)
+    Rafael = Client("Rafael", "Ruvalcaba", "Del Coral", 760,  "rafaelruvalcaba343@gmail.com")
     return Loan(Rafael, Banamex, 9000, 12)  # ✅ Cliente primero, banco segundo
 
     
