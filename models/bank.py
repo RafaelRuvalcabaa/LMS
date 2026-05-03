@@ -1,4 +1,5 @@
 from decorators.log_error import log_error_wrap
+from utils.json_handler import save_to_json  # ← AGREGAR ESTA LÍNEA
 
 
 class Bank:
@@ -8,7 +9,13 @@ class Bank:
         if cls._instancia is None: 
             cls._instancia = super().__new__(cls)
         return cls._instancia
-    
+
+    @classmethod
+    def get_instance(cls): 
+        if cls._instancia is None: 
+            cls._instancia = cls("Banamex", 2_000_000_000)
+        return cls._instancia
+
     @log_error_wrap
     def __init__(self, name: str, capital: float) -> None:
         if hasattr(self, '_name'): return
@@ -47,6 +54,16 @@ class Bank:
     @log_error_wrap
     def add_loan(self, loan): 
         self.loan_history.append(loan)
+        self._save_loans_to_json()
+
+     
+    def _save_loans_to_json(self):
+        """
+        Guarda todos los loans en loans.json
+        """
+        loans_data = [loan.to_dict() for loan in self.loan_history]
+        save_to_json(loans_data, filename="loans.json")
+
 
     @log_error_wrap
     def get_loans(self): 

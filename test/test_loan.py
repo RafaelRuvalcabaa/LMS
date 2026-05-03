@@ -5,13 +5,15 @@ from models.loan import Loan
 from errors.errors_borrowed import ZeroAmount, TimeToPay, CreditScoreError
 from unittest.mock import MagicMock
 
+
 @pytest.fixture
 def build_client():  
     name= "Rafael"
     last_name = "Ruvalcaba"
     city = "Guadalajara"
     score = 750
-    return Client(name, last_name, city, score)
+    email =  "rafaelruvalcaba343@gmail.com"
+    return Client(name, last_name, city, score, email)
 
 @pytest.fixture 
 def build_bank(): 
@@ -44,7 +46,7 @@ def test_without_time( time, build_client, build_bank):
         Loan(build_client, build_bank, 5000, time)
 
 def test_score(build_bank):
-   client = Client("Rafael", "Ruvalcaba", "Guadalajara",100)
+   client = Client("Rafael", "Ruvalcaba", "Guadalajara", 100, "test@gmail.com")
    loan = Loan(client, build_bank, 5000,12)
    with pytest.raises(CreditScoreError): 
        loan.loan()
@@ -60,7 +62,7 @@ def test_aprroved(build_bank, build_client):
     assert loan.monthly() == 1000
 
 def test_credit(build_bank): 
-    client = Client("Rafael", "Ruvalcaba", "Guadalajara",700)
+    client = Client("Rafael", "Ruvalcaba", "Guadalajara", 700, "test@gmail.com")
     loan = Loan(client, build_bank, 5000,12)
     loan.loan()
     assert loan.prestamo == True 

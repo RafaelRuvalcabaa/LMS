@@ -1,0 +1,19 @@
+[
+    {
+        "client": {
+            "name": "Rafael",
+            "last_name": "Ruvalcaba",
+            "city": "Guadalajara",
+            "credit_history": 650
+        },
+        "amount": 10001.0,
+        "time": 6,
+        "status": true,
+        "summary": "Prestamo a nombre de Rafael Ruvalcaba, una cantidad de: 10001.0, por un tiempo de 6 meses",
+        "metadata": {
+            "created_at": "2026-05-03 16:20:54",
+            "created_by": "Admin",
+            "request_id": "fbcd543d-dd77-4b08-a8f3-05ad970ba3bf"
+        }
+    }
+]
