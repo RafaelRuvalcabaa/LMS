@@ -1,19 +1,19 @@
 [
     {
         "client": {
-            "name": "Ulises",
-            "last_name": "Vallejo",
+            "name": "Rafael",
+            "last_name": "Ruvalcaba",
             "city": "Guadalajara",
             "credit_history": 650
         },
-        "amount": 259000.0,
-        "time": 36,
+        "amount": 10001.0,
+        "time": 6,
         "status": true,
-        "summary": "Prestamo a nombre de Ulises Vallejo, una cantidad de: 259000.0, por un tiempo de 36 meses",
+        "summary": "Prestamo a nombre de Rafael Ruvalcaba, una cantidad de: 10001.0, por un tiempo de 6 meses",
         "metadata": {
-            "created_at": "2026-05-01 20:50:39",
+            "created_at": "2026-05-03 16:20:54",
             "created_by": "Admin",
-            "request_id": "b3719d99-d9a2-4094-82e4-cf099da45b74"
+            "request_id": "fbcd543d-dd77-4b08-a8f3-05ad970ba3bf"
         }
     }
 ]

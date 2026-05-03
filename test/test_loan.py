@@ -5,6 +5,7 @@ from models.loan import Loan
 from errors.errors_borrowed import ZeroAmount, TimeToPay, CreditScoreError
 from unittest.mock import MagicMock
 
+
 @pytest.fixture
 def build_client():  
     name= "Rafael"
