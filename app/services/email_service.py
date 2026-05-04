@@ -13,6 +13,7 @@ class EmailService:
         if loan.prestamo == False:
            logger.info("Loan was refused")
         elif settings.email_enabled and loan.prestamo == True: 
+            monthly_payment = loan.amount / loan.time
             resend.Emails.send({
                 "from": settings.email_from, 
                 "to": loan.cliente._email, 
@@ -20,6 +21,7 @@ class EmailService:
                 "html": loan_approved_template( loan.cliente._name,
     loan.cliente._last_name,
     loan.amount,
+    monthly_payment,
     loan.time,
     loan.created_at.strftime("%Y-%m-%d"))
             })
